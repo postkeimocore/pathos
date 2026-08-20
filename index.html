@@ -9,30 +9,34 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--ink)}
 .topbar{height:42px;background:#191919;color:#fff;display:flex;align-items:center;gap:8px;padding:0 12px;position:sticky;top:0;z-index:10}
-.topbar strong{font-size:11px;letter-spacing:.05em}.topbar .grow{flex:1}.topbar a,.topbar button{border:1px solid #666;background:#292929;color:#fff;border-radius:4px;padding:5px 8px;text-decoration:none;font-size:10px;cursor:pointer;line-height:1}.topbar button.active{background:#fff;color:#111}
+.topbar strong{font-size:11px;letter-spacing:.05em}.topbar .grow{flex:1}.topbar a{border:1px solid #666;background:#292929;color:#fff;border-radius:4px;padding:5px 8px;text-decoration:none;font-size:10px;line-height:1}
 .intro{max-width:1180px;margin:12px auto 6px;padding:0 10px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}.intro h1{font-size:18px;line-height:1.2;margin:0 0 4px}.intro p{margin:0;color:#5c5c5c;font-size:10px;line-height:1.5}.legend{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.legend span{font-size:9px;border:1px solid #b0b0b0;background:#fff;padding:3px 5px;white-space:nowrap}
 .map-wrap{padding:6px 10px 16px}.canvas{position:relative;width:min(1180px,100%);height:560px;margin:0 auto;background:#fff;border:1px solid #aaa;box-shadow:0 5px 16px rgba(0,0,0,.06);overflow:hidden}
-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tree{stroke:#8a8a8a;stroke-width:1.1;fill:none}.cross{stroke:#555;stroke-width:1.05;stroke-dasharray:4 4;marker-end:url(#arrow)}
+svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tree{stroke:#8a8a8a;stroke-width:1.1;fill:none}
 .node{position:absolute;width:124px;min-height:64px;background:#fff;border:1px solid #777;padding:8px 9px;text-decoration:none;color:#111;display:flex;flex-direction:column;justify-content:center;z-index:2;transform:translateX(-50%)}.node:hover{outline:2px solid #bbb}.node .id{font-size:8px;color:#888;margin-bottom:2px}.node strong{font-size:10px;line-height:1.25}.node .route{font-size:8px;color:#707070;margin-top:4px;word-break:break-all}.node.root{border:2px solid #111;background:#f1f1f1;width:148px;min-height:70px}.node.cms{border-style:dashed}.node.form{border-width:2px}.node.thanks{background:#eee}.badge{display:none}.hint{position:absolute;right:8px;top:7px;font-size:8px;color:#999}
-.flow-note{position:absolute;left:3.2%;right:3.2%;bottom:12px;border-top:1px solid #bbb;padding-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.flow-box{background:#f8f8f8;border:1px solid #bbb;padding:7px 8px;min-height:52px}.flow-box strong{font-size:9px}.flow-box p{font-size:8px;line-height:1.4;color:#666;margin:3px 0 0}
-@media(max-width:1050px){.canvas{height:530px}.node{width:108px;min-height:60px;padding:7px}.node.root{width:132px}.node strong{font-size:9px}.node .route{font-size:7.5px}.flow-box p{display:none}.flow-box{min-height:auto}.intro{grid-template-columns:1fr}.legend{justify-content:flex-start}}
-@media(max-width:760px){.topbar strong{display:none}.intro h1{font-size:16px}.intro p{font-size:9px}.canvas{min-width:720px}.map-wrap{overflow:auto}.flow-note{display:none}}
+.role-note{position:absolute;left:3.2%;right:3.2%;bottom:12px;border-top:1px solid #bbb;padding-top:8px}.role-note>p{font-size:8px;color:#777;margin:0 0 6px}.role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.role-box{background:#f8f8f8;border:1px solid #bbb;padding:7px 8px;min-height:52px}.role-box strong{font-size:9px}.role-box p{font-size:8px;line-height:1.4;color:#666;margin:3px 0 0}
+@media(max-width:1050px){.canvas{height:530px}.node{width:108px;min-height:60px;padding:7px}.node.root{width:132px}.node strong{font-size:9px}.node .route{font-size:7.5px}.role-box p{display:none}.role-box{min-height:auto}.intro{grid-template-columns:1fr}.legend{justify-content:flex-start}}
+@media(max-width:760px){.topbar strong{display:none}.intro h1{font-size:16px}.intro p{font-size:9px}.canvas{min-width:720px}.map-wrap{overflow:auto}.role-note{display:none}}
 </style>
 </head>
 <body>
-<div class="topbar"><strong>PATHOS / SITE STRUCTURE MAP</strong><span class="grow"></span><button id="flowToggle">主要導線も表示</button><a href="wireframe.html" target="_blank">HTMLワイヤー</a></div>
+<div class="topbar"><strong>PATHOS / SITE STRUCTURE MAP</strong><span class="grow"></span><a href="wireframe.html" target="_blank">HTMLワイヤー</a></div>
 <div class="intro">
-  <div><h1>サイト全体像 / ディレクトリ構成</h1><p>実線＝URL階層、点線＝主要な回遊導線。ノードをクリックすると該当ワイヤーを開きます。</p></div>
+  <div><h1>サイト全体像 / ディレクトリ構成</h1><p>実線はURLの親子関係を表します。ページ間の回遊はこの図では省略し、各ページの主な役割を下部に整理しています。ノードをクリックすると該当ワイヤーを開きます。</p></div>
   <div class="legend"><span>固定</span><span>CMS：破線</span><span>フォーム：太枠</span><span>サンクス：グレー</span></div>
 </div>
 <div class="map-wrap"><div class="canvas" id="canvas">
 <div class="hint">13 pages</div>
-<svg id="svg"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#555"/></marker></defs><g id="treeLines"></g><g id="flowLines" style="display:none"></g></svg>
+<svg id="svg"><g id="treeLines"></g></svg>
 <div id="nodes"></div>
-<div class="flow-note">
-  <div class="flow-box"><strong>① 刈り取り・比較</strong><p>TOP / 料金 / 比較 → 資料DL・問い合わせ</p></div>
-  <div class="flow-box"><strong>② 情報収集</strong><p>実践ガイド → 料金・事例 → 資料DL・問い合わせ</p></div>
-  <div class="flow-box"><strong>③ 信頼形成</strong><p>事例 → 料金・実践ガイド → 資料DL・問い合わせ</p></div>
+<div class="role-note">
+  <p>※ 下記はユーザーの移動順ではなく、各ページの主な役割です。</p>
+  <div class="role-grid">
+    <div class="role-box"><strong>顕在需要・比較</strong><p>TOP / 料金 / 比較</p></div>
+    <div class="role-box"><strong>実務理解</strong><p>実践ガイド</p></div>
+    <div class="role-box"><strong>信頼形成</strong><p>導入事例</p></div>
+    <div class="role-box"><strong>問い合わせ・資料請求</strong><p>資料DL / 問い合わせ</p></div>
+  </div>
 </div>
 </div></div>
 <script>
@@ -51,7 +55,6 @@ const nodes=[
 {id:'P10',route:'/download/thanks/',name:'資料DLサンクス',type:'thanks',parent:'P09'},
 {id:'P12',route:'/contact/thanks/',name:'問い合わせサンクス',type:'thanks',parent:'P11'}
 ];
-// x is percentage of canvas width; y is px. Detail nodes are deliberately separated to avoid overlap.
 const positions={
 P01:[50,24],
 P02:[7.5,150],P03:[21.5,150],P04:[35.5,150],P07:[50,150],P09:[64.5,150],P11:[78.5,150],P13:[92.5,150],
@@ -61,17 +64,11 @@ const host=document.getElementById('nodes');
 function renderNodes(){host.innerHTML=nodes.map(n=>{const [x,y]=positions[n.id];let cls='node';if(n.id==='P01')cls+=' root';if(n.type.startsWith('cms'))cls+=' cms';if(n.type==='form')cls+=' form';if(n.type==='thanks')cls+=' thanks';return `<a class="${cls}" id="${n.id}" style="left:${x}%;top:${y}px" href="wireframe.html#${encodeURI(n.route)}" target="_blank"><span class="id">${n.id}</span><strong>${n.name}</strong><span class="route">${n.route}</span></a>`}).join('');}
 function centerBottom(el){return [el.offsetLeft+el.offsetWidth/2,el.offsetTop+el.offsetHeight]}
 function centerTop(el){return [el.offsetLeft+el.offsetWidth/2,el.offsetTop]}
-function centerRight(el){return [el.offsetLeft+el.offsetWidth,el.offsetTop+el.offsetHeight/2]}
-function centerLeft(el){return [el.offsetLeft,el.offsetTop+el.offsetHeight/2]}
 function pathTree(a,b){const [x1,y1]=centerBottom(a),[x2,y2]=centerTop(b),mid=(y1+y2)/2;return `M${x1},${y1} V${mid} H${x2} V${y2}`}
-function pathFlow(a,b){const [x1,y1]=centerRight(a),[x2,y2]=centerLeft(b),c1=x1+34,c2=x2-34;return `M${x1},${y1} C${c1},${y1} ${c2},${y2} ${x2},${y2}`}
 function renderLines(){
  const tree=document.getElementById('treeLines');tree.innerHTML='';
  nodes.filter(n=>n.parent).forEach(n=>{tree.insertAdjacentHTML('beforeend',`<path class="tree" d="${pathTree(document.getElementById(n.parent),document.getElementById(n.id))}"/>`)});
- const flow=document.getElementById('flowLines');flow.innerHTML='';
- [['P02','P09'],['P02','P11'],['P03','P09'],['P03','P11'],['P04','P09'],['P04','P11'],['P07','P09'],['P07','P11'],['P10','P04'],['P12','P07']].forEach(([a,b])=>flow.insertAdjacentHTML('beforeend',`<path class="cross" d="${pathFlow(document.getElementById(a),document.getElementById(b))}"/>`));
 }
 renderNodes();requestAnimationFrame(renderLines);window.addEventListener('resize',()=>requestAnimationFrame(renderLines));
-const flow=document.getElementById('flowLines'),btn=document.getElementById('flowToggle');btn.onclick=()=>{const on=flow.style.display==='none';flow.style.display=on?'block':'none';btn.classList.toggle('active',on);btn.textContent=on?'主要導線を隠す':'主要導線も表示'};
 </script>
 </body></html>
